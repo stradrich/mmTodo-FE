@@ -248,6 +248,60 @@ Optional: Dashboard with graphs and table (https://mui.com/material-ui/getting-s
 
 Inspiration: https://mui.com/store/previews/soft-ui-pro-dashboard/
 
+# Relationship (props, states, usetate, usecontext, ref, useEffect)
+
+todoApp
+    todoCard
+        Box
+            Card
+                CardContent
+                    Box
+                        Typography
+                        Box
+                            CreateTaskIcon (on click show Create Task Section)
+                            DropdownButton
+                CardContent
+                        Typography
+                        Box
+                            Checkbox
+                            DropdownButton
+                Box (Create Task Section)
+                    CardActions
+                        Input
+                        BasicButtons
+                Box
+                Box
+                    Copyright
+
+
+# React Component Structure
+
+## todoApp
+- ### todoCard
+  - **Box**
+    - **Card**
+      - #### CardContent (First Section)
+        - **Box**
+          - **Typography** (Text, e.g., title or header)
+          - **Box**
+            - **CreateTaskIcon**
+              - On click: Toggles the visibility of the **Create Task Section** (default: hidden)
+            - **DropdownButton**
+              - On click: Triggers a dropdown menu with options, such as "delete entire task"
+              - Also toggles the visibility of the **Create Task Section** (if needed)
+      - #### CardContent (Second Section)
+        - **Typography** (Text, e.g., task description)
+        - **Box**
+          - **Checkbox** (Marks task as completed)
+          - **DropdownButton** (Additional task-related options)
+      - #### Box (Create Task Section) *(Default: hidden)*
+        - **CardActions**
+          - **Input** (Field to type a new task)
+          - **BasicButtons** (Submit new task)
+      - **Box** (Additional content/layout purposes)
+      - **Box**
+        - **Copyright** (Displays copyright information)
+
 # Testing
 
 # ENV set up

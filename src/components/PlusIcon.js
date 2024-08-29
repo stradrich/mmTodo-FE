@@ -30,9 +30,12 @@ const RoundIconContainer = styled('div')(({ theme }) => ({
   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   }));
 
-export default function CreateSvgIcon() {
+export default function CreateTaskIcon() {
+  const handleClick = () => {
+    // console.log('Create Button Clicked from Children');
+  };
   return (
-    <Stack direction="row" spacing={3} className="mt-1 mx-1">
+    <Stack direction="row" spacing={3} className="mt-1 mx-1" onClick={handleClick}>
        <RoundIconContainer>
         <IconButton>
           <PlusIcon  sx={{ color: '#37e2ff' }}/>
