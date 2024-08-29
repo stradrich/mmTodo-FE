@@ -1,13 +1,13 @@
 import React from 'react';
 import './output.css';
 
-import Card from './components/Card'
+import TodoCard from './components/TodoCard'
 
 
 export default function todoApp() {
     return (
         <div>
-            <Card/> 
+            <TodoCard/> 
         </div>
     )
 }
