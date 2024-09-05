@@ -304,4 +304,35 @@ todoApp
 
 # Testing
 
+reactivity 
+plus button > SECTION 1: show/hide input-create btn-cancel btn
+dotted hamburgen > show options (only handle open/close now), I want to know which option I choose, how to log it out? 
+
+<Box sx={{ display: isVisible ? 'block' : 'none', mt: 2 }}>
+          <CardActions
+            sx={{
+              mx: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              gap: 2,
+            }}
+          >
+            <div>
+              <Input type="text" color={borderColor} prop={'What needs to be done?'} />
+            </div>
+
+            <div>
+              <CreateTaskToggle  handleClick={handleClick}/>
+            </div>
+          </CardActions>
+        </Box>
+
+when i type, 1. log out input, 2. enable create button.
+Need 2 event handler... enter on input will create task, then clear input
+
+
 # ENV set up
+
+# INTEGRATE REST-API
+npm install axios
