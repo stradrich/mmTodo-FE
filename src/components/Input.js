@@ -2,18 +2,22 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-export default function Input({prop, color}) {
+export default function Input({value, onChange, onKeyDown, type, prop, color}) {
   return (
     <Box
-      component="form"
       sx={{
         '& > :not(style)': { m: 2, width: '50ch' },
       }}
       noValidate
       autoComplete="off"
       >
-      <TextField 
+      <TextField
+        value={value}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        type={type} 
         placeholder={prop}
+        inputProps={{maxLength: 30}}
         sx={{
           '& .MuiOutlinedInput-input': {
             height: '2rem',
