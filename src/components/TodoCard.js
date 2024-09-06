@@ -17,7 +17,22 @@ export default function TodoCard({ borderColor}) {
   const [isVisible, setIsVisible] = useState(false);
   const [task, setTask] = useState('');
   const [isBoxChecked, setIsBoxChecked] = useState(false);
- 
+  const [checkedTasks, setCheckedTask] = useState({});
+  const [dbTask, setDbTask] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8003/tasks');
+        setDbTask(response.data); // Correctly set the fetched data
+      } catch (error) {
+        setError('Failed to fetch tasks'); // More descriptive error message
+      }
+    };
+    
+    fetchData();
+  }, []);
 
   const handleClick = () => {
     setIsVisible(!isVisible); // Toggle the visibility state
@@ -33,11 +48,14 @@ export default function TodoCard({ borderColor}) {
     }
   }
 
-  const handleCheckBox = () => {
+  const handleCheckBox = (taskId) => {
+    // setIsBoxChecked(!isBoxChecked)
     // console.log('Checkbox clicked');
-    setIsBoxChecked(!isBoxChecked)
+    setCheckedTask((prevCheckedTasks) => ({
+      ...prevCheckedTasks,
+      [taskId]: !prevCheckedTasks[taskId],
+    }))
     console.log(isBoxChecked);
-    
   }
 
   const handleTaskReset = () => {
@@ -70,21 +88,21 @@ export default function TodoCard({ borderColor}) {
 
           <hr />
 
-            <CardContent sx={{ opacity: isBoxChecked ? 1 : 0.5}}>
-              {error && <p>{error}</p>}
-              {dbTask.map(task => (
+            {error && <p>{error}</p>}
+            {dbTask.map(task => (
+            <CardContent key={task.id} sx={{ opacity: checkedTasks[task.id] ? 1 : 0.5}}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                   <Typography sx={{ mt: 1, fontWeight: 'bold' }} key={task.id}>
                       {task.title}
                   </Typography>
                 <Box sx={{ display: 'flex' }}>
-                  <Checkbox onChange={handleCheckBox}/>
+                  <Checkbox checked={!!checkedTasks[task.id]} onChange={() => handleCheckBox(task.id)}/>
                   <DropdownButton optionsRange={[1, 3]}/>
                 </Box>
               </Box>
-              ))}
               <hr/>
-          </CardContent>
+            </CardContent>
+            ))}
           
         </CardContent>
 
