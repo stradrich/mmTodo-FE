@@ -1,0 +1,18 @@
+/* CSS to make scrollbars transparent */
+.transparent-scrollbars::-webkit-scrollbar {
+    width: 8px; /* Adjust the width as needed */
+  }
+  
+  .transparent-scrollbars::-webkit-scrollbar-track {
+    background: transparent; /* Track (part of the scrollbar that the thumb slides within) */
+  }
+  
+  .transparent-scrollbars::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1); /* Thumb (the draggable part of the scrollbar) */
+    border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+  .transparent-scrollbars::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2); /* Darker color when hovered */
+  }
+  
