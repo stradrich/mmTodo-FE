@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -21,6 +21,7 @@ export default function TodoCard({ borderColor}) {
   const [checkedTasks, setCheckedTask] = useState({});
   const [dbTask, setDbTask] = useState([]);
   const [error, setError] = useState(null);
+  const inputRef = useRef(null);  // Access the DOM node directly and focus the input
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,12 +41,30 @@ export default function TodoCard({ borderColor}) {
     // console.log('Create Button Clicked from Parent');
     handleTaskReset();
   };
+  useEffect(() => {
+    if(isVisible) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50)
+    }
+  }, [isVisible]);
 
-  const handleKeyDown = (e) => {
+
+  const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+      const dueDate = new Date('2024-12-31').toISOString().split('T')[0];
+      try {
+        await axios.post('http://127.0.0.1:8000/tasks',{title: task, description: "none", status: 'incomplete', due_date: dueDate, priority: "medium"}); // Make sure to pass the right JSON structure to backend
+ 
+        handleTaskReset();
+
+        const response = await axios.get('http://127.0.0.1:8000/tasks');
+        setDbTask(response.data);
+      } catch (error) {
+        setError('Failed to create tasks');
+      }
       console.log(`Task Entered:`, task);
-      handleTaskReset();
     }
   }
 
@@ -149,7 +168,7 @@ export default function TodoCard({ borderColor}) {
           <hr />
         </CardContent> */}
 
-        <Box sx={{ display: isVisible ? 'block' : 'none', mt: 2 }}>
+        <Box sx={{ display: isVisible ? 'block' : 'none', mt: 2 }} key={isVisible}>
           <CardActions
             sx={{
               mx: 12,
@@ -160,7 +179,7 @@ export default function TodoCard({ borderColor}) {
             }}
           >
             <div>
-              <Input value={task} onChange = {e => setTask(e.target.value)} onKeyDown={handleKeyDown} type="text" color={borderColor} prop={'What needs to be done?'} />
+              <Input ref={inputRef} value={task} onChange = {(e) => setTask(e.target.value)} onKeyDown={handleKeyDown} type="text" color={borderColor} prop={'What needs to be done?'}/>
             </div>
 
             <div>
