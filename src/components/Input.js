@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-export default function Input({value, onChange, onKeyDown, type, prop, color}) {
+const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color}, ref) => {
   return (
     <Box
       sx={{
@@ -12,6 +12,7 @@ export default function Input({value, onChange, onKeyDown, type, prop, color}) {
       autoComplete="off"
       >
       <TextField
+        inputRef={ref}
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}
@@ -40,4 +41,6 @@ export default function Input({value, onChange, onKeyDown, type, prop, color}) {
         />
     </Box>
   );
-}
+});
+
+export default Input;
