@@ -114,7 +114,7 @@ export default function TodoCard({ borderColor}) {
         minHeight: '100vh',
       }}
     >
-      <Card sx={{ display: 'flex', flexDirection: 'column',  width: '40rem'}}>
+      <Card sx={{ display: 'flex', flexDirection: 'column',  width: '40rem', boxShadow: 8 }}>
         <CardContent sx={{ flexGrow: 1 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
             <Typography sx={{ mt: 1 }}>
