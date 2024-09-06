@@ -3,10 +3,12 @@ import { useState } from 'react';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import FontAwesomeKebabIcon from './KebabIcon';
+import axios from "axios";
 
 const options = ["Delete Entire List", "Edit Item", "Delete Item"];
 
-export default function DropdownButton({ optionsRange }) {
+export default function DropdownButton({ optionsRange, setDbTask, setError, dbTask, taskId}) {
+    // console.log('setDbTask in ChildComponent:', setDbTask);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedOption, setSelectionOption] = useState(null);
 
@@ -44,16 +46,44 @@ export default function DropdownButton({ optionsRange }) {
         handleClose();  
     };
 
-    const deleteEntireList = () => {
-        console.log("Deleting the entire list... "); 
+    const deleteEntireList = async () => {
+        try {
+            await axios.delete('http://127.0.0.1:8000/api/tasks')
+            console.log("Deleting the entire list... "); 
+            
+            const response = await axios.get('http://127.0.0.1:8000/tasks');
+            
+            setDbTask(response.data);
+            // console.log(setDbTask);
+            // console.log(response.data);
+            console.log("Tasks after deletion:", response.data);
+        } catch (error) {
+            console.log('Failed to delete the entire list', error);
+            setError('Failed to delete the entire list');
+        }
     };
 
     const editItem = () => {
         console.log("Editing the item with id of {id}... "); 
     };
 
-    const deleteItem = () => {
-        console.log("Deleting the item with id of {id}... "); 
+    const deleteItem = async () => {
+        console.log(taskId);
+        try {
+            const taskToDelete = dbTask.find(task => task.id === taskId);
+            const taskTitle = taskToDelete ? taskToDelete.title : 'Unknown';
+
+            await axios.delete(`http://127.0.0.1:8000/tasks/${taskId}`)
+
+            const response = await axios.get('http://127.0.0.1:8000/tasks');
+            
+            setDbTask(response.data);
+            // console.log(setDbTask);
+            // console.log(response.data);
+            console.log(`Deleting item named ${taskTitle} with the id of ${taskId}... `); 
+        } catch (error) {
+            setError(`Failed to delete task with id of ${taskId}`);
+        }
     };
 
     return (
