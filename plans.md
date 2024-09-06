@@ -273,6 +273,10 @@ todoApp
                 Box
                     Copyright
 
+Scrollable component:
+npm install react-window (use FixedSizeList)
+
+
 
 # React Component Structure
 
