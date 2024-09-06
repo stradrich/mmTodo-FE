@@ -74,11 +74,13 @@ export default function TodoCard({ borderColor}) {
   const handleCheckBox = (taskId) => {
     // setIsBoxChecked(!isBoxChecked)
     // console.log('Checkbox clicked');
+    
     setCheckedTask((prevCheckedTasks) => ({
       ...prevCheckedTasks,
       [taskId]: !prevCheckedTasks[taskId],
     }))
     console.log(isBoxChecked);
+    console.log(taskId);
   }
 
   const handleTaskReset = () => {
@@ -97,7 +99,7 @@ export default function TodoCard({ borderColor}) {
                     </Typography>
                   <Box sx={{ display: 'flex' }}>
                     <Checkbox checked={!!checkedTasks[task.id]} onChange={() => handleCheckBox(task.id)}/>
-                    <DropdownButton optionsRange={[1, 3]}/>
+                    <DropdownButton optionsRange={[1, 3]} setDbTask={setDbTask} setError={setError} dbTask={dbTask} taskId={task.id}/>
                   </Box>
                 </Box>
                 <hr/>
@@ -105,6 +107,8 @@ export default function TodoCard({ borderColor}) {
       </div>
     )
   }
+
+  // console.log('setDbTask in ParentComponent:', setDbTask);
   return (
     <Box
       sx={{
@@ -125,7 +129,7 @@ export default function TodoCard({ borderColor}) {
               <div onClick={handleClick}>
                 <CreateTaskIcon />
               </div>
-                <DropdownButton optionsRange={[0, 1]}/>
+                <DropdownButton optionsRange={[0, 1]} setDbTask={setDbTask} dbTask={dbTask} setError={setError} taskId={task.id}/>
             </Box>
           </Box>
 
