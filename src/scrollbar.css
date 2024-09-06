@@ -8,7 +8,7 @@
   }
   
   .transparent-scrollbars::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1); /* Thumb (the draggable part of the scrollbar) */
+    background: rgba(0, 0, 0, 0.0); /* Thumb (the draggable part of the scrollbar) */
     border-radius: 10px; /* Rounded corners for the scrollbar thumb */
   }
   
