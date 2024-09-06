@@ -12,6 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import CreateTaskIcon from './PlusIcon'; 
 import DropdownButton from './DropdownButton';
 import Copyright from './Copyright';
+import { FixedSizeList } from "react-window";
 
 export default function TodoCard({ borderColor}) {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,7 +25,7 @@ export default function TodoCard({ borderColor}) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8003/tasks');
+        const response = await axios.get('http://127.0.0.1:8000/tasks');
         setDbTask(response.data); // Correctly set the fetched data
       } catch (error) {
         setError('Failed to fetch tasks'); // More descriptive error message
@@ -62,16 +63,36 @@ export default function TodoCard({ borderColor}) {
     setTask(''); // Reset task
   };
 
+  // Move DB mapping here, to be encapsulated into the scrollable component
+  const Row = ({index, style}) => {
+    const task = dbTask[index];
+    return(
+      <div style={style} key={task.id}>
+        <CardContent key={task.id} sx={{ opacity: checkedTasks[task.id] ? 0.5 : 1}}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography sx={{ mt: 1, fontWeight: 'bold' }} key={task.id}>
+                        {task.title}
+                    </Typography>
+                  <Box sx={{ display: 'flex' }}>
+                    <Checkbox checked={!!checkedTasks[task.id]} onChange={() => handleCheckBox(task.id)}/>
+                    <DropdownButton optionsRange={[1, 3]}/>
+                  </Box>
+                </Box>
+                <hr/>
+        </CardContent>
+      </div>
+    )
+  }
   return (
     <Box
       sx={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100vh',
+        minHeight: '100vh',
       }}
     >
-      <Card sx={{ display: 'flex', flexDirection: 'column', height: '50rem',  width: '40rem'}}>
+      <Card sx={{ display: 'flex', flexDirection: 'column',  width: '40rem'}}>
         <CardContent sx={{ flexGrow: 1 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
             <Typography sx={{ mt: 1 }}>
@@ -87,8 +108,18 @@ export default function TodoCard({ borderColor}) {
           </Box>
 
           <hr />
+            
+            <FixedSizeList 
+              height={418}
+              itemSize={100}
+              itemCount={dbTask.length}
+              itemData={dbTask}
+              width="100%"
+            >
+              {Row}
+            </FixedSizeList>
 
-            {error && <p>{error}</p>}
+            {/* {error && <p>{error}</p>}
             {dbTask.map(task => (
             <CardContent key={task.id} sx={{ opacity: checkedTasks[task.id] ? 1 : 0.5}}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -102,7 +133,7 @@ export default function TodoCard({ borderColor}) {
               </Box>
               <hr/>
             </CardContent>
-            ))}
+            ))} */}
           
         </CardContent>
 
@@ -125,7 +156,7 @@ export default function TodoCard({ borderColor}) {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'stretch',
-              gap: 4,
+              gap: 1,
             }}
           >
             <div>
