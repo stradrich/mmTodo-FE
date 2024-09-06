@@ -7,12 +7,13 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Input from './Input';
-import CreateTaskToggle from './Button';
+import CreateTaskDecision from './CreateCancelButton';
 import Checkbox from '@mui/material/Checkbox';
 import CreateTaskIcon from './PlusIcon'; 
 import DropdownButton from './DropdownButton';
 import Copyright from './Copyright';
 import { FixedSizeList } from "react-window";
+import '/home/aldrich/mmTodoFs/mmtodofe/src/scrollbar.css'; 
 
 export default function TodoCard({ borderColor}) {
   const [isVisible, setIsVisible] = useState(false);
@@ -51,6 +52,8 @@ export default function TodoCard({ borderColor}) {
 
 
   const handleKeyDown = async (e) => {
+    if (task === '') return;
+
     if (e.key === 'Enter') {
       e.preventDefault();
       const dueDate = new Date('2024-12-31').toISOString().split('T')[0];
@@ -134,6 +137,7 @@ export default function TodoCard({ borderColor}) {
               itemCount={dbTask.length}
               itemData={dbTask}
               width="100%"
+              className="transparent-scrollbars"
             >
               {Row}
             </FixedSizeList>
@@ -183,7 +187,7 @@ export default function TodoCard({ borderColor}) {
             </div>
 
             <div>
-              <CreateTaskToggle  handleClick={handleClick} task={task}  handleTaskReset={handleTaskReset}/>
+              <CreateTaskDecision  handleClick={handleClick} task={task} setDbTask={setDbTask} setError={setError} handleTaskReset={handleTaskReset}/>
             </div>
           </CardActions>
 
@@ -218,5 +222,3 @@ export default function TodoCard({ borderColor}) {
     </Box>
   );
 }
-
-
