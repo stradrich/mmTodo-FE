@@ -23,6 +23,9 @@ export default function TodoCard({ borderColor}) {
   const [dbTask, setDbTask] = useState([]);
   const [error, setError] = useState(null);
   const inputRef = useRef(null);  // Access the DOM node directly and focus the input
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [editTaskValue, setEditTaskValue] = useState(null);
+  const [taskInputValue, setTaskInputValue] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,11 +40,14 @@ export default function TodoCard({ borderColor}) {
     fetchData();
   }, []);
 
-  const handleClick = () => {
+  const handleClick = (taskId) => {
     setIsVisible(!isVisible); // Toggle the visibility state
     // console.log('Create Button Clicked from Parent');
     handleTaskReset();
+    setEditingTaskId(taskId); // Set the task id that is being edited
   };
+  
+  // focus on create input when clicked
   useEffect(() => {
     if(isVisible) {
       setTimeout(() => {
@@ -51,7 +57,7 @@ export default function TodoCard({ borderColor}) {
   }, [isVisible]);
 
 
-  const handleKeyDown = async (e) => {
+  const handleCreateKeyDown = async (e) => {
     if (task === '') return;
 
     if (e.key === 'Enter') {
@@ -87,19 +93,78 @@ export default function TodoCard({ borderColor}) {
     setTask(''); // Reset task
   };
 
+  const handleEditInput = (taskId, taskTitle) => {
+    console.log(`Link onEdit event from ParentComponent to ChildComponent`);
+    console.log(`Selecting task to be edited with the id of ${taskId}....`);
+    
+    setEditingTaskId(taskId); // Set the current task in edit mode
+    setTaskInputValue(taskTitle); // Set the input field with the current task title
+  }
+  
+  // focus on edit input when clicked
+  useEffect(() => {
+    if(editingTaskId) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50)
+    }
+  }, [editingTaskId]);
+
+  // const handleEditKeyDown = (e) => {
+    
+  //   if (e.key === '') {
+  //     return;
+  //   };
+
+  //   if (e.key === 'Enter') { 
+  //     console.log(e.target.value) 
+  //     handleTaskReset();
+  //   }
+    
+  // }
+
+  // Handle the "Enter" key press
+  const handleEditKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (taskInputValue === '') return;  // Prevent saving if input is empty
+      console.log(e.target.value) 
+      console.log('Updated Task:', taskInputValue); // Do something with the updated task value
+      
+      // Clear the input and toggle back to display the task title
+      setTaskInputValue(''); // Clear the input
+      setEditingTaskId(null); // Exit edit mode to show the task title again
+    }
+  };
+
   // Move DB mapping here, to be encapsulated into the scrollable component
   const Row = ({index, style}) => {
     const task = dbTask[index];
     return(
       <div style={style} key={task.id}>
         <CardContent key={task.id} sx={{ opacity: checkedTasks[task.id] ? 0.5 : 1}}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                    <Typography sx={{ mt: 1, fontWeight: 'bold' }} key={task.id}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    {editingTaskId === task.id ? 
+                    (<Input 
+                      type="text" 
+                      color={borderColor} 
+                      prop={task.title} 
+                      ref={inputRef} 
+                      handleTaskReset={handleTaskReset}
+                      onKeyDown={handleEditKeyDown}
+                      // value={taskInputValue} // Controlled input bound to taskInputValue
+                      // onChange={(e) => setTaskInputValue(e.target.value)} // Update input as user types
+                      // onKeyDown={(e) => { if (e.key === "Enter") {console.log('Edit');
+                      // }}}
+                      />
+                    ) 
+                    :
+                    (<Typography sx={{ ml: 1, mt: 3.5, fontWeight: 'bold' }} key={task.id}>
                         {task.title}
-                    </Typography>
-                  <Box sx={{ display: 'flex' }}>
+                    </Typography>)
+                  }
+                  <Box sx={{mt: 1.2, mb: 1, display: 'flex' }}>
                     <Checkbox checked={!!checkedTasks[task.id]} onChange={() => handleCheckBox(task.id)}/>
-                    <DropdownButton optionsRange={[1, 3]} setDbTask={setDbTask} setError={setError} dbTask={dbTask} taskId={task.id}/>
+                    <DropdownButton optionsRange={[1, 3]} setDbTask={setDbTask} setError={setError} dbTask={dbTask} taskId={task.id} onEdit={()=> handleEditInput(task.id, task.title)}/>
                   </Box>
                 </Box>
                 <hr/>
@@ -187,7 +252,14 @@ export default function TodoCard({ borderColor}) {
             }}
           >
             <div>
-              <Input ref={inputRef} value={task} onChange = {(e) => setTask(e.target.value)} onKeyDown={handleKeyDown} type="text" color={borderColor} prop={'What needs to be done?'}/>
+              <Input 
+              ref={inputRef} 
+              value={task} onChange = {(e) => setTask(e.target.value)} 
+              onKeyDown={handleCreateKeyDown} 
+              type="text" 
+              color={borderColor} 
+              prop={'What needs to be done?'}
+              />
             </div>
 
             <div>
