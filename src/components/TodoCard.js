@@ -8,12 +8,16 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Input from './Input';
 import CreateTaskDecision from './CreateCancelButton';
-import Checkbox from '@mui/material/Checkbox';
+import {Checkbox, Button} from '@mui/material/';
 import CreateTaskIcon from './PlusIcon'; 
 import DropdownButton from './DropdownButton';
 import Copyright from './Copyright';
 import { FixedSizeList } from "react-window";
 import '/home/aldrich/mmTodoFs/mmtodofe/src/scrollbar.css'; 
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
+import DropdownForEditInput from './DropdownForEditInput';
+
 
 export default function TodoCard({ borderColor}) {
   const [isVisible, setIsVisible] = useState(false);
@@ -140,36 +144,48 @@ export default function TodoCard({ borderColor}) {
   const Row = ({index, style}) => {
     const task = dbTask[index];
     return(
-      <div style={style} key={task.id}>
+      <Box style={style} key={task.id}>
         <CardContent key={task.id} sx={{ opacity: checkedTasks[task.id] ? 0.5 : 1}}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     {editingTaskId === task.id ? 
-                    (<Input 
-                      type="text" 
-                      color={borderColor} 
-                      prop={task.title} 
-                      ref={inputRef} 
-                      handleTaskReset={handleTaskReset}
-                      onKeyDown={handleEditKeyDown}
-                      // value={taskInputValue} // Controlled input bound to taskInputValue
-                      // onChange={(e) => setTaskInputValue(e.target.value)} // Update input as user types
-                      // onKeyDown={(e) => { if (e.key === "Enter") {console.log('Edit');
-                      // }}}
+                    (<Box>
+                      <Input 
+                        type="text" 
+                        color={borderColor} 
+                        prop={task.title} 
+                        ref={inputRef} 
+                        handleTaskReset={handleTaskReset}
+                        onKeyDown={handleEditKeyDown}
+                        // value={taskInputValue} // Controlled input bound to taskInputValue
+                        // onChange={(e) => setTaskInputValue(e.target.value)} // Update input as user types
+                        // onKeyDown={(e) => { if (e.key === "Enter") {console.log('Edit');
+                        // }}}
                       />
+                   
+                        <Button sx={{ml: 42, mb: 1, backgroundColor: '#fafaff',  color: 'black', position: 'absolute', zIndex: '1', right: '14rem', top: '4.5rem'}}>
+                          <DoneIcon/>
+                        </Button>
+
+                        <Button sx={{mx: 1,  mb: 1, backgroundColor: '#fafaff',   color: 'black', position: 'absolute', zIndex: '1', right: '8rem', top: '4.5rem'}}>
+                          <CloseIcon/>
+                        </Button>
+                        {/* <DropdownForEditInput/>  */}
+                    
+                    </Box>
                     ) 
                     :
                     (<Typography sx={{ ml: 1, mt: 3.5, fontWeight: 'bold' }} key={task.id}>
                         {task.title}
                     </Typography>)
                   }
-                  <Box sx={{mt: 1.2, mb: 1, display: 'flex' }}>
+                  <Box sx={{ display: 'flex', mb: 3}}>
                     <Checkbox checked={!!checkedTasks[task.id]} onChange={() => handleCheckBox(task.id)}/>
-                    <DropdownButton optionsRange={[1, 3]} setDbTask={setDbTask} setError={setError} dbTask={dbTask} taskId={task.id} onEdit={()=> handleEditInput(task.id, task.title)}/>
+                    <DropdownButton  optionsRange={[1, 3]} setDbTask={setDbTask} setError={setError} dbTask={dbTask} taskId={task.id} onEdit={()=> handleEditInput(task.id, task.title)}/>
                   </Box>
                 </Box>
-                <hr/>
+             <hr/>
         </CardContent>
-      </div>
+      </Box>
     )
   }
 
@@ -208,7 +224,7 @@ export default function TodoCard({ borderColor}) {
               width="100%"
               className="transparent-scrollbars"
             >
-              {Row}
+                {Row}
             </FixedSizeList>
 
             {/* {error && <p>{error}</p>}
