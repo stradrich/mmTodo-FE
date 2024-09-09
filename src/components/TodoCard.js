@@ -16,8 +16,6 @@ import { FixedSizeList } from "react-window";
 import '/home/aldrich/mmTodoFs/mmtodofe/src/scrollbar.css'; 
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
-import DropdownForEditInput from './DropdownForEditInput';
-
 
 export default function TodoCard({ borderColor}) {
   const [isVisible, setIsVisible] = useState(false);
