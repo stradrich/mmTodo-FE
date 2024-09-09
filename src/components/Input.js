@@ -1,6 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
+import DropdownForEditInput from './DropdownForEditInput';
 
 const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color}, ref) => {
   return (
@@ -22,7 +25,7 @@ const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color},
         sx={{
           '& .MuiOutlinedInput-input': {
             height: '2rem',
-            padding: '0.5rem',
+            padding: '1rem',
           },
           '& .MuiOutlinedInput-root': {
             height: '2rem',
@@ -36,9 +39,10 @@ const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color},
             '&.Mui-focused fieldset': {
               borderColor: color || '#37e2ff', // Border color when focused
             },
-          },
+          }
         }} 
         />
+         {/* <DropdownForEditInput/>  */}
     </Box>
   );
 });
