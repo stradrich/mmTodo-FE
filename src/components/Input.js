@@ -22,7 +22,8 @@ const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color},
         sx={{
           '& .MuiOutlinedInput-input': {
             height: '2rem',
-            padding: '0.5rem',
+            padding: '1rem',
+            fontWeight: 'bold'
           },
           '& .MuiOutlinedInput-root': {
             height: '2rem',
@@ -36,7 +37,11 @@ const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color},
             '&.Mui-focused fieldset': {
               borderColor: color || '#37e2ff', // Border color when focused
             },
-          },
+            '& .MuiInputBase-input::placeholder': {
+              color: 'black',
+              fontWeight: 'bold', // Make the placeholder text bold
+            }
+          }
         }} 
         />
     </Box>

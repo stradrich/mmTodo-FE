@@ -7,7 +7,7 @@ import axios from "axios";
 
 const options = ["Delete Entire List", "Edit Item", "Delete Item"];
 
-export default function DropdownButton({ optionsRange, setDbTask, setError, dbTask, taskId}) {
+export default function DropdownButton({ optionsRange, setDbTask, setError, dbTask, taskId, onEdit}) {
     // console.log('setDbTask in ChildComponent:', setDbTask);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedOption, setSelectionOption] = useState(null);
@@ -35,7 +35,7 @@ export default function DropdownButton({ optionsRange, setDbTask, setError, dbTa
                 deleteEntireList();
                 break;
             case "Edit Item":
-                editItem();
+                onEdit(taskId);
                 break;
             case "Delete Item":
                 deleteItem();
@@ -63,8 +63,8 @@ export default function DropdownButton({ optionsRange, setDbTask, setError, dbTa
         }
     };
 
-    const editItem = () => {
-        console.log("Editing the item with id of {id}... "); 
+    const editItem = (taskId) => {
+        console.log(`Editing the item with id of ${taskId}... `); 
     };
 
     const deleteItem = async () => {

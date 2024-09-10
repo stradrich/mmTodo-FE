@@ -335,8 +335,21 @@ dotted hamburgen > show options (only handle open/close now), I want to know whi
 when i type, 1. log out input, 2. enable create button.
 Need 2 event handler... enter on input will create task, then clear input
 
+when edit option inside DropdownButton is click, it should change {task.title} inside Row into  <Input ref={inputRef} value={task} onChange = {(e) => setTask(e.target.value)} onKeyDown={handleKeyDown} type="text" color={borderColor} prop={'What needs to be done?'}/>
+
+Step 1: Make a function for handling Edit input
+Step 2; Pass the Edit input function as a prop to DropdownButton
+Step 3: Pass onEdit argument into DropdownButton
+Step 4: Use onEdit function in the swtich options 
+Step 5: make a ternary toggling for Row to show edit input or just task.title
+
+Edit Input Problem:
+It shouldn't stop focusing when keydown.
+After enter keydown and put resquest is success, the task.title should change immediately, 
 
 # ENV set up
 
 # INTEGRATE REST-API
 npm install axios
+
+
