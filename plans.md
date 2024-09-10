@@ -343,6 +343,10 @@ Step 3: Pass onEdit argument into DropdownButton
 Step 4: Use onEdit function in the swtich options 
 Step 5: make a ternary toggling for Row to show edit input or just task.title
 
+Edit Input Problem:
+It shouldn't stop focusing when keydown.
+After enter keydown and put resquest is success, the task.title should change immediately, 
+
 # ENV set up
 
 # INTEGRATE REST-API
