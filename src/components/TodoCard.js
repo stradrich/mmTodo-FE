@@ -26,8 +26,8 @@ export default function TodoCard({ borderColor}) {
   const [error, setError] = useState(null);
   const inputRef = useRef(null);  // Access the DOM node directly and focus the input
   const [editingTaskId, setEditingTaskId] = useState(null);
-  const [editTaskValue, setEditTaskValue] = useState(null);
   const [taskInputValue, setTaskInputValue] = useState('');
+  const dueDate = new Date('2024-12-31').toISOString().split('T')[0];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +64,7 @@ export default function TodoCard({ borderColor}) {
 
     if (e.key === 'Enter') {
       e.preventDefault();
-      const dueDate = new Date('2024-12-31').toISOString().split('T')[0];
+      
       try {
         await axios.post('http://127.0.0.1:8000/tasks',{title: task, description: "none", status: 'incomplete', due_date: dueDate, priority: "medium"}); // Make sure to pass the right JSON structure to backend
  
@@ -112,38 +112,104 @@ export default function TodoCard({ borderColor}) {
     }
   }, [editingTaskId]);
 
-  // const handleEditKeyDown = (e) => {
-    
-  //   if (e.key === '') {
-  //     return;
-  //   };
-
-  //   if (e.key === 'Enter') { 
-  //     console.log(e.target.value) 
-  //     handleTaskReset();
-  //   }
-    
-  // }
-
   // Handle the "Enter" key press
-  const handleEditKeyDown = (e) => {
+  const handleEditKeyDown = async (e) => {
+    console.log(editingTaskId);
+    console.log(taskInputValue);
+    
     if (e.key === 'Enter') {
-      if (taskInputValue === '') return;  // Prevent saving if input is empty
-      console.log(e.target.value) 
-      console.log('Updated Task:', taskInputValue); // Do something with the updated task value
+      // e.preventDefault(); // Prevent default behavior if Enter is pressed
       
-      // Clear the input and toggle back to display the task title
-      setTaskInputValue(''); // Clear the input
-      setEditingTaskId(null); // Exit edit mode to show the task title again
+      if (taskInputValue === '') {
+        console.log('Task input is empty, not saving.');
+        return; // Exit if the input is empty
+      }
+  
+      console.log('Editing Task ID:', editingTaskId);
+      console.log('Input value:', taskInputValue);
+    
+      try {
+        // Send PUT request to update task
+        await axios.put(`http://127.0.0.1:8000/tasks/${editingTaskId}`, {
+          title: taskInputValue,
+          description: "none",
+          status: 'incomplete',
+          due_date: dueDate,
+          priority: "medium"
+        });
+  
+          // Refetch tasks after update
+        const response = await axios.get('http://127.0.0.1:8000/tasks');
+        setDbTask(response.data);
+
+        console.log(setDbTask);
+        
+
+        console.log('Task Edited Successfully:', response.data);
+        
+        // Clear the input and toggle back to display the task title
+        setTaskInputValue(''); // Clear input field
+        setEditingTaskId(null); // Exit edit mode
+  
+      } catch (error) {
+        console.error('Failed to edit task:', error);
+        setError('Failed to edit task'); // Set error message
+      }
     }
   };
+  
+
+  const handleClickEdit = async (e) => {
+    // if(editingTaskId) {
+    //   console.log('Updated Task:', taskInputValue);
+    //   setTaskInputValue('');
+    //   setEditTaskValue(null);
+    // }
+    console.log(editingTaskId);
+    console.log(taskInputValue);
+
+    if (taskInputValue === '') return;
+
+    try {
+      // Send PUT request to update task
+      await axios.put(`http://127.0.0.1:8000/tasks/${editingTaskId}`, {
+        title: taskInputValue,
+        description: "none",
+        status: 'incomplete',
+        due_date: dueDate,
+        priority: "medium"
+      });
+
+        // Refetch tasks after update
+      const response = await axios.get('http://127.0.0.1:8000/tasks');
+      setDbTask(response.data);
+
+      console.log(setDbTask);
+      
+
+      console.log('Task Edited Successfully:', response.data);
+      
+      // Clear the input and toggle back to display the task title
+      setTaskInputValue(''); // Clear input field
+      setEditingTaskId(null); // Exit edit mode
+
+    } catch (error) {
+      console.error('Failed to edit task:', error);
+      setError('Failed to edit task'); // Set error message
+    }
+ 
+  }
+
+  const handleCancelClickEdit = () => {
+    setEditingTaskId(null); // Exit edit mode to show the task title again
+  }
 
   // Move DB mapping here, to be encapsulated into the scrollable component
   const Row = ({index, style}) => {
     const task = dbTask[index];
     return(
       <Box style={style} key={task.id}>
-        <CardContent key={task.id} sx={{ opacity: checkedTasks[task.id] ? 0.5 : 1}}>
+        <CardContent sx={{ opacity: checkedTasks[task.id] ? 0.5 : 1}}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     {editingTaskId === task.id ? 
                     (<Box>
@@ -151,20 +217,31 @@ export default function TodoCard({ borderColor}) {
                         type="text" 
                         color={borderColor} 
                         prop={task.title} 
-                        ref={inputRef} 
+                        ref={inputRef}
                         handleTaskReset={handleTaskReset}
                         onKeyDown={handleEditKeyDown}
-                        // value={taskInputValue} // Controlled input bound to taskInputValue
-                        // onChange={(e) => setTaskInputValue(e.target.value)} // Update input as user types
+
+                        value={taskInputValue} // Controlled input bound to taskInputValue
+                        onChange={(e) => setTaskInputValue(e.target.value)} // Update input as user types
                         // onKeyDown={(e) => { if (e.key === "Enter") {console.log('Edit');
                         // }}}
                       />
                    
-                        <Button sx={{ml: 42, mb: 1, backgroundColor: '#fafaff',  color: 'black', position: 'absolute', zIndex: '1', right: '14rem', top: '4.5rem'}}>
+                        <Button 
+                            // onClick={ (e) => {
+                            //   console.log('edit clicked');
+                            //   console.log(taskInputValue); // This will log the value
+                            // }} 
+                            
+                          onClick={handleClickEdit}
+                          sx={{ml: 42, mb: 1, backgroundColor: '#fafaff',  color: 'black', position: 'absolute', zIndex: '1', right: '14rem', top: '4.5rem'}}>
                           <DoneIcon/>
                         </Button>
 
-                        <Button sx={{mx: 1,  mb: 1, backgroundColor: '#fafaff',   color: 'black', position: 'absolute', zIndex: '1', right: '8rem', top: '4.5rem'}}>
+                        <Button 
+                          // onClick={ (e) => {console.log('cancel clicked');}} 
+                          onClick={handleCancelClickEdit}
+                          sx={{mx: 1,  mb: 1, backgroundColor: '#fafaff',   color: 'black', position: 'absolute', zIndex: '1', right: '8rem', top: '4.5rem'}}>
                           <CloseIcon/>
                         </Button>
                         {/* <DropdownForEditInput/>  */}
@@ -172,7 +249,7 @@ export default function TodoCard({ borderColor}) {
                     </Box>
                     ) 
                     :
-                    (<Typography sx={{ ml: 1, mt: 3.5, fontWeight: 'bold' }} key={task.id}>
+                    (<Typography sx={{ ml: 1, mt: 3.5, fontWeight: 'bold' }}>
                         {task.title}
                     </Typography>)
                   }
@@ -277,7 +354,13 @@ export default function TodoCard({ borderColor}) {
             </div>
 
             <div>
-              <CreateTaskDecision  handleClick={handleClick} task={task} setDbTask={setDbTask} setError={setError} handleTaskReset={handleTaskReset}/>
+              <CreateTaskDecision  
+                  handleClick={handleClick} 
+                  task={task} 
+                  setDbTask={setDbTask} 
+                  setError={setError} 
+                  handleTaskReset={handleTaskReset}
+              />
             </div>
           </CardActions>
 
