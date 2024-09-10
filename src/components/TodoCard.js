@@ -214,7 +214,7 @@ export default function TodoCard({ borderColor}) {
                     {editingTaskId === task.id ? 
                     (<Box>
                       <Input 
-                        type="text" 
+                        type="text" // EDIT INPUT
                         color={borderColor} 
                         prop={task.title} 
                         ref={inputRef}
@@ -344,10 +344,10 @@ export default function TodoCard({ borderColor}) {
           >
             <div>
               <Input 
+              type="text" // CREATE INPUT
               ref={inputRef} 
               value={task} onChange = {(e) => setTask(e.target.value)} 
               onKeyDown={handleCreateKeyDown} 
-              type="text" 
               color={borderColor} 
               prop={'What needs to be done?'}
               />
