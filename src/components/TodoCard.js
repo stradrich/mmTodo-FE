@@ -234,7 +234,7 @@ export default function TodoCard({ borderColor}) {
                             // }} 
                             
                           onClick={handleClickEdit}
-                          sx={{ml: 42, mb: 1, backgroundColor: '#fafaff',  color: 'black', position: 'absolute', zIndex: '1', right: '14rem', top: '4.5rem'}}>
+                          sx={{ml: 42, mb: 1, backgroundColor: '#fafaff',  color: 'black', position: 'absolute', zIndex: '1', right: '13rem', top: '4.5rem'}}>
                           <DoneIcon/>
                         </Button>
 
