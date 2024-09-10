@@ -6,7 +6,7 @@ const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color},
   return (
     <Box
       sx={{
-        '& > :not(style)': { m: 2, width: '40ch' },
+        '& > :not(style)': { m: 2, width: '50ch' },
       }}
       noValidate
       autoComplete="off"
