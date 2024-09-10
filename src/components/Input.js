@@ -6,7 +6,7 @@ const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color},
   return (
     <Box
       sx={{
-        '& > :not(style)': { m: 2, width: '50ch' },
+        '& > :not(style)': { m: 2, width: '40ch' },
       }}
       noValidate
       autoComplete="off"
@@ -23,6 +23,7 @@ const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color},
           '& .MuiOutlinedInput-input': {
             height: '2rem',
             padding: '1rem',
+            fontWeight: 'bold'
           },
           '& .MuiOutlinedInput-root': {
             height: '2rem',
@@ -36,6 +37,10 @@ const Input = React.forwardRef(({value, onChange, onKeyDown, type, prop, color},
             '&.Mui-focused fieldset': {
               borderColor: color || '#37e2ff', // Border color when focused
             },
+            '& .MuiInputBase-input::placeholder': {
+              color: 'black',
+              fontWeight: 'bold', // Make the placeholder text bold
+            }
           }
         }} 
         />
