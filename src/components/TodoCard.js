@@ -181,6 +181,7 @@ export default function TodoCard({ borderColor }) {
   // Prepare data to pass to Row
   const itemData = {
     dbTask,
+    setDbTask,
     checkedTasks,
     handleCheckBox,
     editingTaskId,
@@ -217,8 +218,8 @@ export default function TodoCard({ borderColor }) {
               {/* Ensure task.id exists; if not, adjust accordingly */}
               <DropdownButton
                 optionsRange={[0, 1]}
-                setDbTask={setDbTask}
                 dbTask={dbTask}
+                setDbTask={setDbTask}
                 setError={setError}
                 // Remove taskId or provide a valid taskId
                 taskId={task.id}

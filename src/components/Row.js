@@ -9,6 +9,7 @@ import DropdownButton from './DropdownButton';
 const Row = ({ index, style, data }) => {
   const {
     dbTask,
+    setDbTask,
     checkedTasks,
     handleCheckBox,
     editingTaskId,
@@ -89,6 +90,7 @@ const Row = ({ index, style, data }) => {
               setDbTask={data.setDbTask}
               setError={setError}
               dbTask={dbTask}
+              setDbTask={setDbTask}
               taskId={task.id}
               onEdit={() => handleEditInput(task.id, task.title)}
             />

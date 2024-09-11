@@ -8,7 +8,7 @@ import axios from "axios";
 const options = ["Delete Entire List", "Edit Item", "Delete Item"];
 
 export default function DropdownButton({ optionsRange, setDbTask, setError, dbTask, taskId, onEdit}) {
-    // console.log('setDbTask in ChildComponent:', setDbTask);
+    console.log('setDbTask in ChildComponent:', setDbTask);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedOption, setSelectionOption] = useState(null);
 
