@@ -301,16 +301,16 @@ export default function TodoCard({ borderColor }) {
           )}
         </Box> */}
 
-        <Box sx={{ mx: 20 }}>
+        {/* <Box sx={{ mx: 20 }}>
           <>
             <p>Don't miss out on important tasks anymore</p>
-            {/* <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/> */}
+            <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/>
           </>    
-        </Box>
-
-        {/* <Box sx={{ mx: 20 }}>
-            <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/> 
         </Box> */}
+
+        <Box sx={{ mx: 20 }}>
+            <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/> 
+        </Box>
         
         <br />
 
