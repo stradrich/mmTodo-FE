@@ -9,6 +9,7 @@ import DropdownButton from './DropdownButton';
 import Copyright from './Copyright';
 import '/home/aldrich/mmTodoFs/mmtodofe/src/scrollbar.css'; 
 import Row from './Row';
+import Quotes from './Quotes';
 
 export default function TodoCard({ borderColor }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,6 +20,7 @@ export default function TodoCard({ borderColor }) {
   const inputRef = useRef(null);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [taskInputValue, setTaskInputValue] = useState('');
+  const [showQuote, setShowQuote] = useState(true);
   const dueDate = new Date('2024-12-31').toISOString().split('T')[0];
 
   // On mount, fetch task from backend 
@@ -193,7 +195,7 @@ export default function TodoCard({ borderColor }) {
     handleCancelClickEdit,
     borderColor,
     setError,
-    inputRef
+    inputRef,
   };
 
   return (
@@ -287,10 +289,29 @@ export default function TodoCard({ borderColor }) {
         <br />
 
         {/* Footer Text */}
+        {/* <Box sx={{ mx: 20 }}>
+          { showQuote ? (
+            <p>Don't miss out on important tasks anymore</p>
+          )
+          :
+          ( 
+          <>
+            <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/>
+          </>
+          )}
+        </Box> */}
+
         <Box sx={{ mx: 20 }}>
-          <p>Don't miss out on important tasks anymore</p>
+          <>
+            <p>Don't miss out on important tasks anymore</p>
+            {/* <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/> */}
+          </>    
         </Box>
 
+        {/* <Box sx={{ mx: 20 }}>
+            <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/> 
+        </Box> */}
+        
         <br />
 
         {/* Footer */}
