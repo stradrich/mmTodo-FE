@@ -25,6 +25,8 @@ export default function DropdownButton({ optionsRange, setDbTask, setError, dbTa
 
     // handle CRUD here (mainly, delete all, edit specific and delete specific), using switch
     const handleOptionClick = (option) => {
+        console.log(taskId);
+        
         setSelectionOption(option);
         console.log('Selected Option:', option);
         // Show if we could get the data from backend (render data to check if we can get anything)
