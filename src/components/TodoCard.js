@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
-import {Card, CardActions, CardContent, Typography, Box } from '@mui/material';
-import { FixedSizeList } from 'react-window';
+import {Card, CardActions, CardContent, Typography, Box} from '@mui/material';
+import { FixedSizeList} from 'react-window';
 import Input from './Input';
 import CreateTaskDecision from './CreateCancelButton';
 import CreateTaskIcon from './PlusIcon';
@@ -192,10 +192,12 @@ export default function TodoCard({ borderColor }) {
       <Card sx={{ display: 'flex', flexDirection: 'column', width: '40rem', boxShadow: 8 }}>
         <CardContent sx={{ flexGrow: 1 }}>
           {/* Header */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-            <Typography sx={{ mt: 1, fontSize: '1.4rem', fontFamily: 'Comic Sans MS' }}>Get things done</Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2, mb: 3 }}>
+            <Typography sx={{ mt: 1, ml: 2, fontSize: '1.3rem', fontFamily: 'Comic Sans MS' }}>
+              Get things done
+            </Typography>
 
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', mr: 3 }}>
               <div onClick={handleClick}>
                 <CreateTaskIcon />
               </div>
@@ -277,8 +279,8 @@ export default function TodoCard({ borderColor }) {
         <br />
 
         {/* Footer */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-          <Copyright year={2024} placeholder="Aldrich" />
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 5 }}>
+          <Copyright year={2024} placeholder="Aldrich P" />
         </Box>
       </Card>
     </Box>
