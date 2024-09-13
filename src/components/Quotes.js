@@ -39,10 +39,12 @@ export default function Quotes() {
     return (
         <>
             {showMessage ? (
-                <p>Don't miss out on important tasks anymore</p>
+                 <Box className="transparent-scrollbars flex items-center justify-start max-w-[400px] overflow-x-auto whitespace-nowrap mt-1 mb-8">
+                     <p>Don't miss out on important tasks anymore</p>
+                 </Box>
             ) : (
                 <>
-                    <Box className="transparent-scrollbars flex items-center justify-start max-w-[400px] overflow-x-auto whitespace-nowrap mt-1 mb-1">
+                    <Box className="transparent-scrollbars flex items-center justify-start max-w-[400px] overflow-x-auto whitespace-nowrap">
                         <p className="w-full">
                             {quote}
                         </p>
