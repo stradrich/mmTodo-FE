@@ -27,7 +27,7 @@ export default function TodoCard({ borderColor }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8003/tasks');
+        const response = await axios.get('http://127.0.0.1:8000/tasks');
         setDbTask(response.data);
       } catch (error) {
         setError('Failed to fetch tasks');
@@ -59,7 +59,7 @@ export default function TodoCard({ borderColor }) {
       e.preventDefault();
 
       try {
-        await axios.post('http://127.0.0.1:8003/tasks', {
+        await axios.post('http://127.0.0.1:8000/tasks', {
           title: task,
           description: 'none',
           status: 'incomplete',
@@ -69,7 +69,7 @@ export default function TodoCard({ borderColor }) {
 
         handleTaskReset();
 
-        const response = await axios.get('http://127.0.0.1:8003/tasks');
+        const response = await axios.get('http://127.0.0.1:8000/tasks');
         setDbTask(response.data);
       } catch (error) {
         setError('Failed to create tasks');
@@ -124,7 +124,7 @@ export default function TodoCard({ borderColor }) {
 
       try {
         // PUT REQUEST (input enter) to update DB
-        await axios.put(`http://127.0.0.1:8003/tasks/${editingTaskId}`, {
+        await axios.put(`http://127.0.0.1:8000/tasks/${editingTaskId}`, {
           title: taskInputValue,
           description: 'none',
           status: 'incomplete',
@@ -133,7 +133,7 @@ export default function TodoCard({ borderColor }) {
         });
 
         // GET REQUEST after update
-        const response = await axios.get(`http://127.0.0.1:8003/tasks`);
+        const response = await axios.get(`http://127.0.0.1:8000/tasks`);
         setDbTask(response.data);
 
         console.log('Task Edited Successfully:', response.data);
@@ -153,7 +153,7 @@ export default function TodoCard({ borderColor }) {
 
     try {
       // PUT REQUEST (button click) to update task
-      await axios.put(`http://127.0.0.1:8003/tasks/${editingTaskId}`, {
+      await axios.put(`http://127.0.0.1:8000/tasks/${editingTaskId}`, {
         title: taskInputValue,
         description: 'none',
         status: 'incomplete',
@@ -162,7 +162,7 @@ export default function TodoCard({ borderColor }) {
       });
 
        // GET REQUEST after update
-      const response = await axios.get('http://127.0.0.1:8003/tasks');
+      const response = await axios.get('http://127.0.0.1:8000/tasks');
       setDbTask(response.data);
 
       console.log('Task Edited Successfully:', response.data);
@@ -205,13 +205,14 @@ export default function TodoCard({ borderColor }) {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
+        px: 2
       }}
     >
       <Card sx={{ display: 'flex', flexDirection: 'column', width: '40rem', boxShadow: 8 }}>
         <CardContent sx={{ flexGrow: 1 }}>
           {/* Header */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-            <Typography sx={{ mt: 1 }}>TEST LIST</Typography>
+            <Typography sx={{ mt: 1, fontSize: '1.4rem', fontFamily: 'Comic Sans MS' }}>Get things done</Typography>
 
             <Box sx={{ display: 'flex' }}>
               <div onClick={handleClick}>
