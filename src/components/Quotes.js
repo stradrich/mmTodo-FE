@@ -25,9 +25,6 @@ export default function Quotes() {
 
                     setQuote(quoteData.quote);
                     setAuthor(quoteData.author);
-
-                    // Log to verify data
-                    console.log(`Quote of the day: ${quoteData.quote} by ${quoteData.author}`);
                 } catch (error) {
                     console.error('Error fetching quote:', error);
                 }

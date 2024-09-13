@@ -74,7 +74,6 @@ export default function TodoCard({ borderColor }) {
       } catch (error) {
         setError('Failed to create tasks');
       }
-      console.log(`Task Entered:`, task);
     }
   };
 
@@ -83,8 +82,6 @@ export default function TodoCard({ borderColor }) {
       ...prevCheckedTasks,
       [taskId]: !prevCheckedTasks[taskId],
     }));
-    console.log(checkedTasks);
-    console.log(taskId);
   };
 
   // Reset task
@@ -93,9 +90,6 @@ export default function TodoCard({ borderColor }) {
   };
 
   const handleEditInput = (taskId, taskTitle) => {
-    console.log(`Link onEdit event from ParentComponent to ChildComponent`);
-    console.log(`Selecting task to be edited with the id of ${taskId}....`);
-
     setEditingTaskId(taskId);
     setTaskInputValue(taskTitle);
   };
@@ -110,17 +104,10 @@ export default function TodoCard({ borderColor }) {
   }, [editingTaskId]);
 
   const handleEditInputKeyDown = async (e) => {
-    console.log(editingTaskId);
-    console.log(taskInputValue);
-
     if (e.key === 'Enter') {
       if (taskInputValue === '') {
-        console.log('Task input is empty, not saving.');
         return;
       }
-
-      console.log('Editing Task ID:', editingTaskId);
-      console.log('Input value:', taskInputValue);
 
       try {
         // PUT REQUEST (input enter) to update DB
@@ -136,13 +123,10 @@ export default function TodoCard({ borderColor }) {
         const response = await axios.get(`http://127.0.0.1:8000/tasks`);
         setDbTask(response.data);
 
-        console.log('Task Edited Successfully:', response.data);
-
         // Clear the input and exit edit mode
         setTaskInputValue('');
         setEditingTaskId(null);
       } catch (error) {
-        console.error('Failed to edit task:', error);
         setError('Failed to edit task');
       }
     }
@@ -165,13 +149,10 @@ export default function TodoCard({ borderColor }) {
       const response = await axios.get('http://127.0.0.1:8000/tasks');
       setDbTask(response.data);
 
-      console.log('Task Edited Successfully:', response.data);
-
       // Clear the input and exit edit mode
       setTaskInputValue('');
       setEditingTaskId(null);
     } catch (error) {
-      console.error('Failed to edit task:', error);
       setError('Failed to edit task');
     }
   };
@@ -288,26 +269,6 @@ export default function TodoCard({ borderColor }) {
         </Box>
 
         <br />
-
-        {/* Footer Text */}
-        {/* <Box sx={{ mx: 20 }}>
-          { showQuote ? (
-            <p>Don't miss out on important tasks anymore</p>
-          )
-          :
-          ( 
-          <>
-            <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/>
-          </>
-          )}
-        </Box> */}
-
-        {/* <Box sx={{ mx: 20 }}>
-          <>
-            <p>Don't miss out on important tasks anymore</p>
-            <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/>
-          </>    
-        </Box> */}
 
         <Box sx={{ mx: 20 }}>
             <Quotes showQuote={showQuote} setShowQuote={setShowQuote}/> 

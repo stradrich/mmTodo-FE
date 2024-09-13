@@ -20,7 +20,6 @@ export default function CreateTaskDecision({ handleClick, task, handleTaskReset,
     } catch (error) {
       setError('Failed to create tasks');
     }
-      console.log(`creating new task...${task}`);  
   }
   return (
     <Stack spacing={2} direction="row" sx={{ dislay: 'flex', justifyContent: 'end',}}>
