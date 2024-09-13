@@ -50,10 +50,10 @@ export default function DropdownButton({ optionsRange, setDbTask, setError, dbTa
 
     const deleteEntireList = async () => {
         try {
-            await axios.delete('http://127.0.0.1:8003/api/tasks')
+            await axios.delete('http://127.0.0.1:8000/api/tasks')
             console.log("Deleting the entire list... "); 
             
-            const response = await axios.get('http://127.0.0.1:8003/tasks');
+            const response = await axios.get('http://127.0.0.1:8000/tasks');
             
             setDbTask(response.data);
             // console.log(setDbTask);
@@ -75,9 +75,9 @@ export default function DropdownButton({ optionsRange, setDbTask, setError, dbTa
             const taskToDelete = dbTask.find(task => task.id === taskId);
             const taskTitle = taskToDelete ? taskToDelete.title : 'Unknown';
 
-            await axios.delete(`http://127.0.0.1:8003/tasks/${taskId}`)
+            await axios.delete(`http://127.0.0.1:8000/tasks/${taskId}`)
 
-            const response = await axios.get('http://127.0.0.1:8003/tasks');
+            const response = await axios.get('http://127.0.0.1:8000/tasks');
             
             setDbTask(response.data);
             // console.log(setDbTask);
