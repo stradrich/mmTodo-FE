@@ -8,28 +8,20 @@ import axios from "axios";
 const options = ["Delete Entire List", "Edit Item", "Delete Item"];
 
 export default function DropdownButton({ optionsRange, setDbTask, setError, dbTask, taskId, onEdit}) {
-    // console.log('setDbTask in ChildComponent:', setDbTask);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedOption, setSelectionOption] = useState(null);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
-        console.log('show');
-        
     };
 
     const handleClose = () => {
         setAnchorEl(null);
-        console.log('hide');
     };
 
     // handle CRUD here (mainly, delete all, edit specific and delete specific), using switch
     const handleOptionClick = (option) => {
-        console.log(taskId);
-        
         setSelectionOption(option);
-        console.log('Selected Option:', option);
-        // Show if we could get the data from backend (render data to check if we can get anything)
         
         // Excecute CRUD
         switch(option.trim()) {
@@ -42,8 +34,7 @@ export default function DropdownButton({ optionsRange, setDbTask, setError, dbTa
             case "Delete Item":
                 deleteItem();
             default:
-             console.log('unknown action');
-             
+             console.log('unknown action'); 
         }
         handleClose();  
     };
@@ -51,26 +42,15 @@ export default function DropdownButton({ optionsRange, setDbTask, setError, dbTa
     const deleteEntireList = async () => {
         try {
             await axios.delete('http://127.0.0.1:8000/api/tasks')
-            console.log("Deleting the entire list... "); 
             
             const response = await axios.get('http://127.0.0.1:8000/tasks');
-            
             setDbTask(response.data);
-            // console.log(setDbTask);
-            // console.log(response.data);
-            console.log("Tasks after deletion:", response.data);
         } catch (error) {
-            console.log('Failed to delete the entire list', error);
             setError('Failed to delete the entire list');
         }
     };
 
-    const editItem = (taskId) => {
-        console.log(`Editing the item with id of ${taskId}... `); 
-    };
-
     const deleteItem = async () => {
-        console.log(taskId);
         try {
             const taskToDelete = dbTask.find(task => task.id === taskId);
             const taskTitle = taskToDelete ? taskToDelete.title : 'Unknown';
@@ -80,9 +60,6 @@ export default function DropdownButton({ optionsRange, setDbTask, setError, dbTa
             const response = await axios.get('http://127.0.0.1:8000/tasks');
             
             setDbTask(response.data);
-            // console.log(setDbTask);
-            // console.log(response.data);
-            console.log(`Deleting item named ${taskTitle} with the id of ${taskId}... `); 
         } catch (error) {
             setError(`Failed to delete task with id of ${taskId}`);
         }

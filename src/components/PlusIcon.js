@@ -32,7 +32,6 @@ const RoundIconContainer = styled('div')(({ theme }) => ({
 
 export default function CreateTaskIcon() {
   const handleClick = () => {
-    // console.log('Create Button Clicked from Children');
   };
   return (
     <Stack direction="row" spacing={3} className="mt-1 mx-1" onClick={handleClick}>

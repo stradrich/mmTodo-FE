@@ -25,9 +25,6 @@ export default function Quotes() {
 
                     setQuote(quoteData.quote);
                     setAuthor(quoteData.author);
-
-                    // Log to verify data
-                    console.log(`Quote of the day: ${quoteData.quote} by ${quoteData.author}`);
                 } catch (error) {
                     console.error('Error fetching quote:', error);
                 }
@@ -45,9 +42,12 @@ export default function Quotes() {
                 <p>Don't miss out on important tasks anymore</p>
             ) : (
                 <>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: '400px', overflow: 'auto', padding: '20px' }}>
-                        <p>{quote}</p>
+                    <Box className="transparent-scrollbars flex items-center justify-start max-w-[400px] overflow-x-auto whitespace-nowrap mt-1 mb-1">
+                        <p className="w-full">
+                            {quote}
+                        </p>
                     </Box>
+
                     <br />
                     {/* <Box>
                         <p>{author}</p>
