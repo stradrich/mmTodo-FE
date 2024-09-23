@@ -11,11 +11,11 @@ export default function CreateTaskDecision({ handleClick, task, handleTaskReset,
     const dueDate = new Date('2024-12-31').toISOString().split('T')[0];
 
     try {
-      await axios.post('http://43.216.199.230/tasks',{title: task, description: "none", status: 'incomplete', due_date: dueDate, priority: "medium"}); // Make sure to pass the right JSON structure to backend
+      await axios.post('http://43.216.131.238/tasks',{title: task, description: "none", status: 'incomplete', due_date: dueDate, priority: "medium"}); // Make sure to pass the right JSON structure to backend
     
       handleTaskReset();
 
-      const response = await axios.get('http://43.216.199.230/tasks');
+      const response = await axios.get('http://43.216.131.238/tasks');
       setDbTask(response.data);
     } catch (error) {
       setError('Failed to create tasks');
